@@ -13,7 +13,7 @@ import { getUserByEmailService } from "@/service/user.service";
 //import { SidebarTrigger } from "./ui/sidebar";
 
 async function Header() {
-  const user = await getUserByEmailService("test@test.com");
+  const user = await getUserByEmailService("test@email-test.com");
 
   return (
     <header
