@@ -9,7 +9,7 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
-import { loginAction, signUpAction } from "@/actions/users";
+import { loginAction, signUpAction } from "@/service/user.service";
 // import { loginAction, signUpAction } from "@/actions/users";
 
 type Props = {

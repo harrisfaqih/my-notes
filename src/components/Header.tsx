@@ -5,14 +5,15 @@ import { Button } from "./ui/button";
 import DarkModeToggle from "./DarkModeToggle";
 import { LogOut } from "lucide-react";
 import LogOutButton from "./LogoutButton";
-import { getUser } from "@/auth/server";
+import { getUser } from "@/repository/user.repository";
+import { getUserByEmailService } from "@/service/user.service";
 //import LogOutButton from "./LogOutButton";
 
 //import { getUser } from "@/auth/server";
 //import { SidebarTrigger } from "./ui/sidebar";
 
 async function Header() {
-  const user = await getUser();
+  const user = await getUserByEmailService("test@test.com");
 
   return (
     <header
