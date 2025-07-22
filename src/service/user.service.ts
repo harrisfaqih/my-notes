@@ -19,11 +19,6 @@ export const loginAction = async (email: string, password: string) => {
       return { errorMessage: "User not found" };
     }
 
-    // Error tersebut muncul karena properti 'password' tidak ada pada tipe 'user' yang dikembalikan oleh fungsi getUserByEmail.
-    // Kemungkinan besar, pada repository/user.repository.ts, fungsi getUserByEmail hanya mengambil field tertentu (misal: id, email), tanpa menyertakan password.
-    // Solusi: Ambil password user dengan fungsi getUserPassword, atau modifikasi getUserByEmail agar juga mengembalikan password.
-    // Contoh solusi (menggunakan getUserPassword):
-
     if (userPassword !== password) {
       return { errorMessage: "Invalid password" };
     }
