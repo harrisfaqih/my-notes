@@ -1,3 +1,5 @@
+"use server";
+
 import { cookies } from "next/headers";
 import { PrismaClient, Prisma } from "@prisma/client";
 
@@ -26,13 +28,13 @@ export async function getUser(userId: number) {
 }
 
 export async function getUserByEmail(email: string) {
-  const client = await prisma;
+  // const client = await prisma;
 
-  const userObject = await client.user.findUnique({
-    where: {
-      email: email,
-    },
-  });
+  // const userObject = await client.user.findFirst({
+  //   where: {
+  //     email: email,
+  //   },
+  // });
 
-  return userObject;
+  return null;
 }

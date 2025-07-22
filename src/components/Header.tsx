@@ -1,16 +1,12 @@
+// // HAPUS "use client"; dari sini
+
 import { shadow } from "@/styles/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import DarkModeToggle from "./DarkModeToggle";
-import { LogOut } from "lucide-react";
 import LogOutButton from "./LogoutButton";
-import { getUser } from "@/repository/user.repository";
 import { getUserByEmailService } from "@/service/user.service";
-//import LogOutButton from "./LogOutButton";
-
-//import { getUser } from "@/auth/server";
-//import { SidebarTrigger } from "./ui/sidebar";
 
 async function Header() {
   const user = await getUserByEmailService("test@email-test.com");
@@ -31,13 +27,12 @@ async function Header() {
           className="rounded-full"
           priority
         />
-
         <h1 className="flex flex-col pb-1 text-2xl leading-6 font-semibold">
           My<span>Notes</span>
         </h1>
       </Link>
 
-      <div className="flex gap-4">
+      <div className="flex items-center gap-4">
         {user ? (
           <LogOutButton />
         ) : (
