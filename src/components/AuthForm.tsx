@@ -12,27 +12,54 @@ import Link from "next/link";
 import { loginAction, signUpAction } from "@/service/user.service";
 
 type Props = {
-  type: "login" | "signup";
+  type: "login" | "signUp";
 };
 
 function AuthForm({ type }: Props) {
-  const isLoginForm = type === "signup";
+  const isLoginForm = type === "login";
   const [isPending, startTransition] = useTransition();
 
   const router = useRouter();
 
   const handleSubmit = (formData: FormData) => {
+    //console.log("form submited");
     startTransition(async () => {
       const email = formData.get("email") as string;
       const password = formData.get("password") as string;
 
-      let errorMessage;
-      if (isLoginForm) {
-        errorMessage = (await loginAction(email, password)).errorMessage;
-      } else {
-        errorMessage = (await signUpAction(email, password)).errorMessage;
+      if (type === "signUp") {
+        const response = await fetch("/api/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        });
+        const data = await response.json();
+        if (data.success) {
+          router.replace("/login?register=success");
+        } else {
+          console.log("User creation failed" + data.error);
+        }
+      } else if (type === "login") {
+        const response = await fetch("/api/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ user: email, password }),
+        });
+        const data = await response.json();
+        if (data.success) {
+          router.replace("/?login=success");
+        } else {
+          alert("login failed" + data.error);
+        }
       }
-
+      // let errorMessage;
+      // if (isLoginForm) {
+      //   errorMessage = (await loginAction(email, password)).errorMessage;
+      // } else {
+      //   errorMessage = (await signUpAction(email, password)).errorMessage;
+      // }
       //   if (!errorMessage) {
       //     router.replace(`/?toastType=${type}`);
       //   } else {
@@ -43,7 +70,7 @@ function AuthForm({ type }: Props) {
 
   return (
     <form action={handleSubmit}>
-      <CardContent>
+      <CardContent className="grid w-full items-center gap-4">
         <div className="flex flex-col space-y-1.5">
           <Label htmlFor="email">Email</Label>
           <Input
@@ -56,7 +83,7 @@ function AuthForm({ type }: Props) {
           />
         </div>
         <div className="flex flex-col space-y-1.5">
-          <Label htmlFor="password">Password</Label>
+          <Label htmlFor="password">password</Label>
           <Input
             id="password"
             name="password"

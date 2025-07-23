@@ -18,17 +18,19 @@ function LogoutButton() {
   const handleLogOut = async () => {
     setLoading(true);
 
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await new Promise((resolve) => setTimeout(resolve, 100));
 
     const errorMessage = null;
 
-    if (errorMessage) {
-      toast(errorMessage, {
+    if (!errorMessage) {
+      toast("logged out", {
         description: errorMessage,
       });
       router.push("/");
     } else {
-      toast("Logout berhasil", {});
+      toast("Logout error", {
+        description: errorMessage,
+      });
     }
 
     setLoading(false);
