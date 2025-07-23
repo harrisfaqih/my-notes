@@ -6,22 +6,29 @@ import { useState } from "react";
 //import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { useSonner } from "sonner";
+import { toast } from "./ui/sonner";
 
 //import { logOutAction } from "@/actions/users";
 
 function LogoutButton() {
+  //const { toast } = useSonner();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  //const {toast} = useSonner();
+
   const handleLogOut = async () => {
     setLoading(true);
 
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
     const errorMessage = null;
 
-    if (!errorMessage) {
-      router.push(`/?toastType=logOut`);
+    if (errorMessage) {
+      toast(errorMessage, {
+        description: errorMessage,
+      });
+      router.push("/");
     } else {
-      console.log("error");
+      toast("Logout berhasil", {});
     }
 
     setLoading(false);
